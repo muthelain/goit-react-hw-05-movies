@@ -1,12 +1,13 @@
 import ListItem from 'components/ListItem/ListItem';
 import { useEffect, useRef, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import { getMovieByName } from 'utils/GetDataFromAPI';
 
 export default function Movies() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [movies, setMovies] = useState([]);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const query = searchParams.get('query');
   const firstRender = useRef(true);
@@ -17,6 +18,18 @@ export default function Movies() {
       firstRender.current = false;
     }
   }, [query]);
+
+  useEffect(() => {
+    navigate('/movies');
+    const moviesNavLink = document.getElementById('moviesNavLink');
+    if (moviesNavLink) {
+      moviesNavLink.classList.add('active-link');
+    }
+    const homeNavLink = document.getElementById('homeNavLink');
+    if (homeNavLink) {
+      homeNavLink.classList.remove('active-link');
+    }
+  }, [navigate]);
 
   const onInputChange = e => {
     if (firstRender.current) {
@@ -39,6 +52,7 @@ export default function Movies() {
     }
     getMovieByName(query.trim()).then(data => setMovies(data.results));
   };
+
   return (
     <>
       <form onSubmit={onFormSubmit}>

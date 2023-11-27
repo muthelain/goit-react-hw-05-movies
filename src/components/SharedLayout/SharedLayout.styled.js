@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { NavLink } from 'react-router-dom';
 
 export const Container = styled.div`
   display: flex;
@@ -15,15 +14,13 @@ export const Header = styled.header`
   gap: 20px;
 `;
 
-export const StyledNavLink = styled(NavLink)`
+export const StyledNavLink = styled.div`
   font-size: 30px;
-  color: black;
+  color: ${(props) => (props.isActive ? 'orange' : 'black')};
 
   :hover {
     color: blue;
   }
-
-  &.active {
-    color: orange;
-  }
 `;
+
+

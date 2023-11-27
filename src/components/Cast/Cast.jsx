@@ -7,21 +7,27 @@ export default function MovieCast() {
   const [cast, setCast] = useState([]);
   const { movieId } = useParams();
   const imgURL = 'https://image.tmdb.org/t/p/w500';
+
   useEffect(() => {
     getMovieDetails(movieId, 'credits').then(data => setCast(data.cast));
   }, [movieId]);
+
   return (
     <ActorsList>
-      {cast.map(actor => {
-        const { cast_id, profile_path, character, name } = actor;
-        return (
-          <li key={cast_id}>
-            <ActorPhoto src={`${imgURL}${profile_path}`} alt={character} />
-            <p>{name}</p>
-            <p>Character: {character}</p>
-          </li>
-        );
-      })}
+      {cast.length > 0 ? (
+        cast.map(actor => {
+          const { cast_id, profile_path, character, name } = actor;
+          return (
+            <li key={cast_id}>
+              <ActorPhoto src={`${imgURL}${profile_path}`} alt={character} />
+              <p>{name}</p>
+              <p>Character: {character}</p>
+            </li>
+          );
+        })
+      ) : (
+        <h4>There is no cast information available</h4>
+      )}
     </ActorsList>
   );
 }
