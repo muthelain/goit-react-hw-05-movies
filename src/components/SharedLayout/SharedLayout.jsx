@@ -7,7 +7,6 @@ export default function SharedLayout() {
   const [activeButton, setActiveButton] = useState('');
 
   useEffect(() => {
-    // Определяем, какая кнопка должна быть активной на основе текущего пути
     if (location.pathname === '/') {
       setActiveButton('home');
     } else if (location.pathname.startsWith('/movies')) {
@@ -17,9 +16,7 @@ export default function SharedLayout() {
     }
   }, [location.pathname]);
 
-  // Эффект при монтировании компонента
   useEffect(() => {
-    // Если путь не совпадает ни с одним из условий, устанавливаем активной кнопку "Home"
     if (!activeButton) {
       setActiveButton('home');
     }
